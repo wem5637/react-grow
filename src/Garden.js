@@ -19,8 +19,9 @@ class Garden extends Component {
         <br/>
         <br/>
         <br/>
-        <p>Will McCracken 2018</p>
+        <p>Credit to the original game "Seed"</p>
         <p>Credit to Ashraff Hathibelagal for fractal tree code</p>
+        <p>Will McCracken 2018</p>
       </React.Fragment>
     );
   }
