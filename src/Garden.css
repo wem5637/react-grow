@@ -2,7 +2,7 @@
 	width: 1000px;
 	height: 506px;
 	position: relative;
-	background-color: lightblue;
+	background-color: whitesmoke;
 	margin:auto;
 }
 
@@ -14,3 +14,11 @@
 	background-color: tan;
 }
 
+p{
+	font-size:10px;
+}
+
+h2{
+	margin:0px;
+	margin-bottom:15px;
+}

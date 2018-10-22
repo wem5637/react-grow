@@ -183,7 +183,7 @@ var flowerBreedPropDiff = {
 	stemColor: 40,
 	petalColor: 40,
 	branchWidth:2,
-	angle: 2,
+	angle: 1,
 	length: 5,
 }
 
