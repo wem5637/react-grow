@@ -119,6 +119,8 @@ class DayFlower extends Flower{
 		this.branchWidth = 3;
 		this.angle = 2;
 		this.angleDev = 8;
+		this.splitParam = 8;
+		this.leafSize = 10;
 	}
 }
 
@@ -128,9 +130,11 @@ class NightFlower extends Flower{
 		this.stemColor = 'rgb(0,0,0)';
 		this.petalColor = 'rgb(255,0,255)';
 		this.length = 35;
-		this.branchWidth = 3;
+		this.branchWidth = 2;
 		this.angle = -3;
-		this.angleDev = 8;	
+		this.angleDev = 8;
+		this.splitParam = 12;
+		this.leafSize = 10;
 	}
 }
 
@@ -185,21 +189,25 @@ var valueOscillator = function(num, key, inbreedBool){
 var flowerBreedPropDiff = {
 	stemColor: 40,
 	petalColor: 40,
-	branchWidth:2,
+	branchWidth:.1,
 	angle: .5,
 	length: 1,
-	angleDev: 1,
+	angleDev: .1,
+	splitParam: .01,
+	leafSize: .1
 }
 
 
 
-function Flower(length, angle, branchWidth, petalColor, stemColor, angleDev){
+function Flower(length, angle, branchWidth, petalColor, stemColor, angleDev, splitParam, leafSize){
 	this.length = length; 
 	this.angle = angle;
 	this.branchWidth = branchWidth;
 	this.petalColor = petalColor;
 	this.stemColor = stemColor;
 	this.angleDev = angleDev;
+	this.splitParam = splitParam;
+	this.leafSize = leafSize;
 
 	this.breedCounter = 2;
 	this.id = Math.random()*1000000;

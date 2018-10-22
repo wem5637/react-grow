@@ -5,7 +5,7 @@ class Flower extends Component {
   drawFractalTree(){
     var c = document.getElementById("myCanvas");
     var ctx = c.getContext("2d");
-    function draw(startX, startY, len, angle, branchWidth, strokeStyle, fillStyle, angleDev) {
+    function draw(startX, startY, len, angle, branchWidth, strokeStyle, fillStyle, angleDev, splitParam, leafSize) {
       ctx.beginPath();
       ctx.save();
       ctx.strokeStyle = strokeStyle;
@@ -18,19 +18,19 @@ class Flower extends Component {
       ctx.stroke();
       ctx.shadowBlur = 1;
       ctx.shadowColor = "rgba(0,0,0,0.8)";
-      if(len < 10) {
+      if(len < splitParam) {
           ctx.beginPath();
-          ctx.arc(0, -len, 10, 0, Math.PI/2);
+          ctx.arc(0, -leafSize, leafSize, 0, Math.PI/2);
           ctx.fill();
           ctx.restore();
           return;
       }
-      draw(0, -len, len*0.8, angle+angleDev, branchWidth*0.8, strokeStyle, fillStyle, angleDev);
-      draw(0, -len, len*0.8, angle-angleDev, branchWidth*0.8, strokeStyle, fillStyle, angleDev);
+      draw(0, -len, len*0.8, angle+angleDev, branchWidth*.8, strokeStyle, fillStyle, angleDev, splitParam, leafSize);
+      draw(0, -len, len*0.8, angle-angleDev, branchWidth*.8, strokeStyle, fillStyle, angleDev, splitParam, leafSize);
       
       ctx.restore();
     }
-    draw((1000/6)*(this.props.position+1), 700, this.props.flower.length, this.props.flower.angle, this.props.branchWidth, this.props.flower.stemColor, this.props.flower.petalColor, this.props.flower.angleDev);
+    draw((1000/6)*(this.props.position+1), 700, this.props.flower.length, this.props.flower.angle, this.props.flower.branchWidth, this.props.flower.stemColor, this.props.flower.petalColor, this.props.flower.angleDev, this.props.flower.splitParam, this.props.flower.leafSize);
   }
 
   inbreed = () => {
