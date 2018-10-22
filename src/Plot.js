@@ -3,6 +3,7 @@ import './Plot.css';
 import Flower from './Flower';
 
 class Plot extends Component {
+
   render() {
     return (
       <div className="pot">

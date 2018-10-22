@@ -7,24 +7,24 @@ class Grow extends Component {
 
 	}
 
-	plant=(newflower, oldflower)=>{
+	plant=(newflower, newflower2, oldflower)=>{
 		var plotsKeys = Object.keys(this.state.plots)
 		plotsKeys.forEach(plotKey => {
 			if(this.state.plots[plotKey] && this.state.plots[plotKey].id === oldflower.id){
 				var newArr = this.state.plots.slice()
-				newArr[plotKey] = null;
-				
-				this.setState({plots:newArr}, ()=>{
-					var rand4 = Math.floor(Math.random()*5);
-					var newPlots = this.state.plots.slice();
-					newPlots[rand4] = newflower;
-					this.setState({plots: newPlots});
-				})
+				newArr[plotKey] = null;		
+				var rand4 = Math.floor(Math.random()*5);
+				var rand42 = Math.floor(Math.random()*5);
+
+				newArr[rand4] = newflower;
+				newArr[rand42] = newflower2;
+				this.setState({plots: newArr});
+
 			}
 		})
 	}
 
-	inbreed=(oldflower)=>{
+	inbreed = (oldflower) => {
 		var keys = Object.keys(oldflower);
 		var newFlower = new Flower();
 		keys.forEach((key)=>{
@@ -36,14 +36,24 @@ class Grow extends Component {
 				}
 			}
 		})
-
+		var newFlower2 = new Flower();
+		keys.forEach((key)=>{
+			if(flowerBreedPropDiff[key]){
+				if(key.toString().slice(-5).toLowerCase()==="color"){
+					newFlower2[key] = colorOscillator(oldflower[key], key, true);
+				}else{
+					newFlower2[key] = valueOscillator(oldflower[key], key, true);
+				}
+			}
+		})
 	    var c = document.getElementById("myCanvas");
 	    var ctx = c.getContext("2d");
 	    ctx.clearRect(0,0,1000,500);
-		this.plant(newFlower, oldflower);
+	    console.log(newFlower, newFlower2)
+		this.plant(newFlower, newFlower2, oldflower);
 	}
 
-	crossbreed=(flower1, flower2)=>{
+	crossbreed = (flower1, flower2) => {
 		var keys = Object.keys(flower1)
 		var newFlower = {}
 		keys.forEach((key)=>{
@@ -77,13 +87,13 @@ class Grow extends Component {
 		}
 	}
 
-	destroy= async (flower)=>{
+	destroy = (flower) => {
 		var plotsKeys = Object.keys(this.state.plots);
 		plotsKeys.forEach(plotKey=>{
 			if(this.state.plots[plotKey]&&this.state.plots[plotKey].id===flower.id){
 				var newArr = this.state.plots.slice();
 				newArr[plotKey] = null;
-				await this.setState({plots:newArr});
+				this.setState({plots:newArr});
 			}
 		})
 	}
@@ -102,38 +112,28 @@ export default Grow;
 class DayFlower extends Flower{
 	constructor() {
 		super();
-		this.stemHeight = 5; 
-		this.stemWidth = 5;
 		this.stemColor = 'rgb(0,255,0)';
-		this.petalNum = 4;
-		this.petalSize = 5;
 		this.petalColor = 'rgb(255,0,0)';
-		this.petalVariety = 0;
-		this.bulbSize = 5;
-		this.bulbColor = 'rgb(255,255,255)';
-		this.length = 10;		
-		
+		this.length = 30;		
+		this.branchWidth = 3;
+		this.angle = 2;
 	}
 }
 
 class NightFlower extends Flower{
 	constructor() {
 		super();
-		this.stemHeight = 2; 
-		this.stemWidth = 2;
 		this.stemColor = 'rgb(0,0,0)';
-		this.petalNum = 2;
-		this.petalSize = 5;
 		this.petalColor = 'rgb(255,0,255)';
-		this.petalVariety = 0;
-		this.bulbSize = 3;
-		this.bulbColor = 'rgb(255,0,0)';
-		this.length = 15;				
+		this.length = 35;
+		this.branchWidth = 3;
+		this.angle = -3;	
 	}
 }
+
 var colorOscillator = function(rgb, key, inbreedBool){
 	//ex. rgb(10,20,30)
-	var orig = rgb.slice(4,-1).split(',')
+	var orig = rgb.slice(4,-1).split(',').map((num)=>parseInt(num))
 	var mult = 1;
 	if(inbreedBool){
 		mult = 2;
@@ -180,30 +180,22 @@ var valueOscillator = function(num, key, inbreedBool){
 }
 
 var flowerBreedPropDiff = {
-	// stemHeight:.2,
-	// stemWidth:.2,
-	// stemColor: 40,
-	// petalNum:1,
-	// petalSize:.2,
-	// petalColor: 40,
-	// petalVariety:.1,
-	// bulbSize:.2,
-	// bulbColor: 40,
+	stemColor: 40,
+	petalColor: 40,
+	branchWidth:2,
+	angle: 2,
 	length: 5,
 }
 
 
 
-function Flower(stemHeight, stemWidth, stemColor, petalNum, petalSize, petalColor, petalVariety, bulbSize, bulbColor){
-	this.stemHeight = stemHeight; 
-	this.stemWidth = stemWidth;
-	this.stemColor = stemColor;
-	this.petalNum = petalNum;
-	this.petalSize = petalSize;
+function Flower(length, angle, branchWidth, petalColor, stemColor){
+	this.length = length; 
+	this.angle = angle;
+	this.branchWidth = branchWidth;
 	this.petalColor = petalColor;
-	this.petalVariety = petalVariety;
-	this.bulbSize = bulbSize;
-	this.bulbColor = bulbColor;
+	this.stemColor = stemColor;
+
 	this.breedCounter = 2;
 	this.id = Math.random()*1000000;
 }
