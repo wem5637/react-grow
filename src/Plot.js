@@ -7,7 +7,7 @@ class Plot extends Component {
   render() {
     return (
       <div className="pot">
-        {this.props.plot?<div><Flower position={this.props.plotno} inbreed={this.props.inbreed} flower={this.props.plot}/></div>:null}
+        {this.props.plot?<div><Flower position={this.props.plotno} inbreed={this.props.inbreed} destroy={this.props.destroy} flower={this.props.plot}/></div>:null}
       </div>
     );
   }

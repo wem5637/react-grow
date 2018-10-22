@@ -1,6 +1,6 @@
 .backdrop{
 	width: 1000px;
-	height: 506px;
+	height: 706px;
 	position: relative;
 	background-color: whitesmoke;
 	margin:auto;
@@ -9,7 +9,7 @@
 .ground{
 	width: 1000px;
 	height: 80px;
-	top: 500px;
+	top: 700px;
 	position: absolute;
 	background-color: tan;
 }

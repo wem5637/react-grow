@@ -19,7 +19,6 @@ class Grow extends Component {
 				newArr[rand4] = newflower;
 				newArr[rand42] = newflower2;
 				this.setState({plots: newArr});
-
 			}
 		})
 	}
@@ -48,8 +47,7 @@ class Grow extends Component {
 		})
 	    var c = document.getElementById("myCanvas");
 	    var ctx = c.getContext("2d");
-	    ctx.clearRect(0,0,1000,500);
-	    console.log(newFlower, newFlower2)
+	    ctx.clearRect(0,0,1000,700);
 		this.plant(newFlower, newFlower2, oldflower);
 	}
 
@@ -93,6 +91,9 @@ class Grow extends Component {
 			if(this.state.plots[plotKey]&&this.state.plots[plotKey].id===flower.id){
 				var newArr = this.state.plots.slice();
 				newArr[plotKey] = null;
+			    var c = document.getElementById("myCanvas");
+			    var ctx = c.getContext("2d");
+			    ctx.clearRect(0,0,1000,700);
 				this.setState({plots:newArr});
 			}
 		})
@@ -101,7 +102,7 @@ class Grow extends Component {
   render() {
     return (
       <div>
-        <Garden inbreed={this.inbreed} plots={this.state.plots}/>
+        <Garden inbreed={this.inbreed} destroy={this.destroy} plots={this.state.plots}/>
       </div>
     );
   }
@@ -117,6 +118,7 @@ class DayFlower extends Flower{
 		this.length = 30;		
 		this.branchWidth = 3;
 		this.angle = 2;
+		this.angleDev = 8;
 	}
 }
 
@@ -127,7 +129,8 @@ class NightFlower extends Flower{
 		this.petalColor = 'rgb(255,0,255)';
 		this.length = 35;
 		this.branchWidth = 3;
-		this.angle = -3;	
+		this.angle = -3;
+		this.angleDev = 8;	
 	}
 }
 
@@ -183,18 +186,20 @@ var flowerBreedPropDiff = {
 	stemColor: 40,
 	petalColor: 40,
 	branchWidth:2,
-	angle: 1,
-	length: 5,
+	angle: .5,
+	length: 1,
+	angleDev: 1,
 }
 
 
 
-function Flower(length, angle, branchWidth, petalColor, stemColor){
+function Flower(length, angle, branchWidth, petalColor, stemColor, angleDev){
 	this.length = length; 
 	this.angle = angle;
 	this.branchWidth = branchWidth;
 	this.petalColor = petalColor;
 	this.stemColor = stemColor;
+	this.angleDev = angleDev;
 
 	this.breedCounter = 2;
 	this.id = Math.random()*1000000;
